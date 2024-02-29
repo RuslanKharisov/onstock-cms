@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "suppliers",
+  "info": {
+    "singularName": "supplier",
+    "pluralName": "suppliers",
+    "displayName": "Supplier",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "supplier_name": {
+      "type": "string",
+      "required": true
+    },
+    "stock_availabilities": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::stock-availability.stock-availability",
+      "mappedBy": "supplier"
+    }
+  }
+}

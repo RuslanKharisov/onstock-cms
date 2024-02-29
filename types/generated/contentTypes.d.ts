@@ -362,38 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiProductProduct extends Schema.CollectionType {
-  collectionName: 'products';
-  info: {
-    singularName: 'product';
-    pluralName: 'products';
-    displayName: 'Product';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String & Attribute.Required;
-    description: Attribute.Text & Attribute.Required;
-    sku: Attribute.String & Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -815,6 +783,238 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiCustomerCustomer extends Schema.CollectionType {
+  collectionName: 'customers';
+  info: {
+    singularName: 'customer';
+    pluralName: 'customers';
+    displayName: 'Customer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    castomer_name: Attribute.String & Attribute.Required;
+    castomer_phone: Attribute.String & Attribute.Required;
+    castomer_email: Attribute.String & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::customer.customer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::customer.customer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiOrderOrder extends Schema.CollectionType {
+  collectionName: 'orders';
+  info: {
+    singularName: 'order';
+    pluralName: 'orders';
+    displayName: 'Order';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    date_order_placed: Attribute.DateTime & Attribute.Required;
+    date_order_paid: Attribute.DateTime & Attribute.Required;
+    order_price: Attribute.Decimal & Attribute.Required;
+    order_products: Attribute.Relation<
+      'api::order.order',
+      'oneToMany',
+      'api::order-product.order-product'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::order.order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiOrderProductOrderProduct extends Schema.CollectionType {
+  collectionName: 'order_products';
+  info: {
+    singularName: 'order-product';
+    pluralName: 'order-products';
+    displayName: 'Order_Product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    quantity: Attribute.Integer & Attribute.Required;
+    unit_price: Attribute.Decimal;
+    total: Attribute.Decimal;
+    product: Attribute.Relation<
+      'api::order-product.order-product',
+      'manyToOne',
+      'api::product.product'
+    >;
+    order: Attribute.Relation<
+      'api::order-product.order-product',
+      'manyToOne',
+      'api::order.order'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::order-product.order-product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::order-product.order-product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Product';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    description: Attribute.Text & Attribute.Required;
+    sku: Attribute.String & Attribute.Required;
+    price: Attribute.Decimal & Attribute.Required;
+    order_products: Attribute.Relation<
+      'api::product.product',
+      'oneToMany',
+      'api::order-product.order-product'
+    >;
+    stock_availabilities: Attribute.Relation<
+      'api::product.product',
+      'oneToMany',
+      'api::stock-availability.stock-availability'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiStockAvailabilityStockAvailability
+  extends Schema.CollectionType {
+  collectionName: 'stock_availabilities';
+  info: {
+    singularName: 'stock-availability';
+    pluralName: 'stock-availabilities';
+    displayName: 'Stock_Availability';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    quantity: Attribute.Integer;
+    product: Attribute.Relation<
+      'api::stock-availability.stock-availability',
+      'manyToOne',
+      'api::product.product'
+    >;
+    supplier: Attribute.Relation<
+      'api::stock-availability.stock-availability',
+      'manyToOne',
+      'api::supplier.supplier'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::stock-availability.stock-availability',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::stock-availability.stock-availability',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSupplierSupplier extends Schema.CollectionType {
+  collectionName: 'suppliers';
+  info: {
+    singularName: 'supplier';
+    pluralName: 'suppliers';
+    displayName: 'Supplier';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    supplier_name: Attribute.String & Attribute.Required;
+    stock_availabilities: Attribute.Relation<
+      'api::supplier.supplier',
+      'oneToMany',
+      'api::stock-availability.stock-availability'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::supplier.supplier',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::supplier.supplier',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -825,7 +1025,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::product.product': ApiProductProduct;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -834,6 +1033,12 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::customer.customer': ApiCustomerCustomer;
+      'api::order.order': ApiOrderOrder;
+      'api::order-product.order-product': ApiOrderProductOrderProduct;
+      'api::product.product': ApiProductProduct;
+      'api::stock-availability.stock-availability': ApiStockAvailabilityStockAvailability;
+      'api::supplier.supplier': ApiSupplierSupplier;
     }
   }
 }

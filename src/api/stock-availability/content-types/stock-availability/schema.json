@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stock_availabilities",
+  "info": {
+    "singularName": "stock-availability",
+    "pluralName": "stock-availabilities",
+    "displayName": "Stock_Availability"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "quantity": {
+      "type": "integer"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "stock_availabilities"
+    },
+    "supplier": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::supplier.supplier",
+      "inversedBy": "stock_availabilities"
+    }
+  }
+}
