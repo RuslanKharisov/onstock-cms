@@ -766,6 +766,9 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.role'
     >;
     name: Attribute.String;
+    image: Attribute.String;
+    website_url: Attribute.String;
+    github_username: Attribute.String & Attribute.Unique;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -776,6 +779,36 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::users-permissions.user',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAccountAccount extends Schema.CollectionType {
+  collectionName: 'accounts';
+  info: {
+    singularName: 'account';
+    pluralName: 'accounts';
+    displayName: 'Account';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    userId: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::account.account',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::account.account',
       'oneToOne',
       'admin::user'
     > &
@@ -909,7 +942,6 @@ export interface ApiProductProduct extends Schema.CollectionType {
     name: Attribute.String & Attribute.Required;
     description: Attribute.Text & Attribute.Required;
     sku: Attribute.String & Attribute.Required;
-    price: Attribute.Decimal & Attribute.Required;
     order_products: Attribute.Relation<
       'api::product.product',
       'oneToMany',
@@ -1033,6 +1065,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::account.account': ApiAccountAccount;
       'api::customer.customer': ApiCustomerCustomer;
       'api::order.order': ApiOrderOrder;
       'api::order-product.order-product': ApiOrderProductOrderProduct;

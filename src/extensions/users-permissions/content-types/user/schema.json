@@ -67,6 +67,18 @@
     },
     "name": {
       "type": "string"
+    },
+    "image": {
+      "type": "string",
+      "regex": "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)"
+    },
+    "website_url": {
+      "type": "string",
+      "regex": "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)"
+    },
+    "github_username": {
+      "type": "string",
+      "unique": true
     }
   }
 }

@@ -24,10 +24,6 @@
       "type": "string",
       "required": true
     },
-    "price": {
-      "type": "decimal",
-      "required": true
-    },
     "order_products": {
       "type": "relation",
       "relation": "oneToMany",
